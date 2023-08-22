@@ -1,0 +1,7 @@
+// .eslintrc
+
+{
+  "rules": {
+    "no-var": "error" // var 금지
+  }
+}
