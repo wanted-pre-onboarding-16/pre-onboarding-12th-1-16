@@ -20,6 +20,9 @@ const SignIn = () => {
 
   const onClickHandler = () => {
     navigate('/signup');
+      
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSignIn(e);
   };
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -28,7 +31,6 @@ const SignIn = () => {
     try {
       const result = await SignInHandle(email, password);
       if (result.status === 200 && result.data.access_token) {
-        alert('환영합니다.');
         localStorage.setItem('jwt_token', result.data.access_token);
         setError('');
         setEmail('');
@@ -37,7 +39,11 @@ const SignIn = () => {
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data.message);
+        if (err.response.status === 401) {
+          setError('아이디 혹은 비밀번호를 다시 확인해주세요!');
+        } else if (err.response.status === 404) {
+          setError('존재하지 않는 회원입니다!');
+        }
       } else {
         console.error(err);
       }
@@ -68,6 +74,7 @@ const SignIn = () => {
             placeholder="password"
             value={password}
             onChange={e => handlePasswordChange(e)}
+            onKeyDown={handleKeyDown}
           />
           {error && <p>{error}</p>}
         </div>
