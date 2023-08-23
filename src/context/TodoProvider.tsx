@@ -1,13 +1,13 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import type { State, Todo } from '../..';
+import type { ITodo, State } from '../..';
 
 type Action =
-  | { type: 'ADD'; payload: Todo }
-  | { type: 'GET'; payload: Todo[] }
+  | { type: 'ADD'; payload: ITodo }
+  | { type: 'GET'; payload: ITodo[] }
   | { type: 'DELETE'; payload: number }
   | {
       type: 'UPDATE';
-      payload: Todo;
+      payload: ITodo;
     };
 
 const GlobalStateContext = createContext<
