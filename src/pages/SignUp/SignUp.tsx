@@ -17,6 +17,10 @@ const SignUp = () => {
     handlePasswordChange,
   } = Vaildate();
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSignUp(e);
+  };
+
   const [error, setError] = useState('');
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -72,6 +76,7 @@ const SignUp = () => {
               data-testid="password-input"
               placeholder="******************"
               onChange={e => handlePasswordChange(e)}
+              onKeyDown={handleKeyDown}
             />
             {error && <p>{error}</p>}
           </div>
