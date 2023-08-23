@@ -3,6 +3,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import Vaildate from '../../custom/Vaildate';
 import { SignInHandle } from '../../util/UserUtil';
+import {
+  Container,
+  Text,
+  EmailWrapper,
+  PasswordWrapper,
+  SignInForm,
+  Label,
+  EmailInput,
+  PasswordInput,
+  ErrorMsg,
+  SignInBtn,
+  SignUpBtn,
+} from './SignIn.styled';
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -18,13 +31,20 @@ const SignIn = () => {
 
   const [error, setError] = useState('');
 
+  const onClickHandler = () => {
+    navigate('/signup');
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSignIn(e);
+  };
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!enableButton) return;
     try {
       const result = await SignInHandle(email, password);
       if (result.status === 200 && result.data.access_token) {
-        alert('환영합니다.');
         localStorage.setItem('jwt_token', result.data.access_token);
         setError('');
         setEmail('');
@@ -33,7 +53,11 @@ const SignIn = () => {
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data.message);
+        if (err.response.status === 401) {
+          setError('아이디 혹은 비밀번호를 다시 확인해주세요!');
+        } else if (err.response.status === 404) {
+          setError('존재하지 않는 회원입니다!');
+        }
       } else {
         console.error(err);
       }
@@ -44,36 +68,45 @@ const SignIn = () => {
   }, [navigate]);
 
   return (
-    <div>
-      <form onSubmit={handleSignIn}>
-        <div className="mb-4">
-          <label htmlFor="">Email</label>
-          <input
+    <Container>
+      <SignInForm onSubmit={handleSignIn}>
+        <Text>Sign In</Text>
+        <EmailWrapper>
+          <Label htmlFor="">Email</Label>
+          <EmailInput
             type="text"
             data-testid="email-input"
             placeholder="example@email.com"
             onChange={e => handleEmailChange(e)}
             value={email}
           />
-        </div>
-        <div>
-          <label htmlFor="">Password</label>
-          <input
+        </EmailWrapper>
+        <PasswordWrapper>
+          <Label htmlFor="">Password</Label>
+          <PasswordInput
             type="password"
             data-testid="password-input"
             placeholder="password"
             value={password}
             onChange={e => handlePasswordChange(e)}
+            onKeyDown={handleKeyDown}
           />
-          {error && <p>{error}</p>}
-        </div>
+          {error && <ErrorMsg>{error}</ErrorMsg>}
+        </PasswordWrapper>
         <div>
-          <button data-testid="signin-button" type="submit" disabled={enableButton ? false : true}>
+          <SignInBtn
+            data-testid="signin-button"
+            type="submit"
+            disabled={enableButton ? false : true}
+          >
             Sign In
-          </button>
+          </SignInBtn>
+          <SignUpBtn type="button" onClick={onClickHandler}>
+            Sign Up
+          </SignUpBtn>
         </div>
-      </form>
-    </div>
+      </SignInForm>
+    </Container>
   );
 };
 

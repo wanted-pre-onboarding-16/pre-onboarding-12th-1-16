@@ -1,21 +1,27 @@
-export interface Todo {
+export interface ITodo {
   id: number;
   todo: string;
   isCompleted: boolean;
   userId: number;
 }
 export interface State {
-  todos: Todo[];
+  todos: ITodo[];
 }
 
 export type Action =
-  | { type: 'ADD'; payload: Todo }
-  | { type: 'GET'; payload: Todo[] }
+  | { type: 'ADD'; payload: ITodo }
+  | { type: 'GET'; payload: ITodo[] }
   | { type: 'DELETE'; payload: number }
   | {
       type: 'UPDATE';
-      payload: Todo;
+      payload: ITodo;
     };
 export interface Prop {
-  data: { id: number; todo: string; isCompleted: boolean; userId: number };
+  data: {
+    id: number;
+    todo: string;
+    isCompleted: boolean;
+    userId: number;
+  };
+  deleteTodo: (postId: number) => void;
 }

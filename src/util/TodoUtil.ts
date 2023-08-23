@@ -27,13 +27,14 @@ export const GetTodo = async () => {
   return result.data;
 };
 export const DeleteTodo = async (id: number) => {
-  await axios({
+  const result = await axios({
     url: `https://www.pre-onboarding-selection-task.shop/todos/${id}`,
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
     },
   });
+  return result;
 };
 
 export const UpdateTodo = async (value: { id: number; todo: string; isCompleted: boolean }) => {
