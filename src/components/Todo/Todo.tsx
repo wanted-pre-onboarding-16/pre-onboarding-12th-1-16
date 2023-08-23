@@ -1,35 +1,21 @@
 import axios from 'axios';
 import React, { useCallback, useRef, useState } from 'react';
 import type { Prop } from '../../..';
-
 import { GlobalState } from '../../context/TodoProvider';
-import { DeleteTodo, UpdateTodo } from '../../util/TodoUtil';
+import { UpdateTodo } from '../../util/TodoUtil';
 
-const Todo = ({ data }: Prop) => {
+const Todo = ({ data, deleteTodo }: Prop) => {
   const context = GlobalState();
   const textRef = useRef<HTMLInputElement>(null);
   const checkRef = useRef<HTMLInputElement>(null);
   const [isModify, setIsModify] = useState(false);
 
-  const deleteTodo = useCallback(
-    async (e: React.FormEvent) => {
+  const handleDelete = useCallback(
+    (e: React.FormEvent) => {
       e.preventDefault();
-      try {
-        await DeleteTodo(data.id).then(_ => {
-          context?.dispatch({
-            type: 'DELETE',
-            payload: data.id,
-          });
-        });
-      } catch (err) {
-        if (axios.isAxiosError(err) && err.response?.data) {
-          alert(err.response.data.message);
-        } else {
-          console.error(err);
-        }
-      }
+      deleteTodo(data.id);
     },
-    [context, data.id],
+    [data.id, deleteTodo],
   );
   const updateTodo = useCallback(
     async (e: React.FormEvent) => {
@@ -116,7 +102,7 @@ const Todo = ({ data }: Prop) => {
           취소
         </button>
       ) : (
-        <button onClick={deleteTodo} data-testid="delete-button">
+        <button onClick={handleDelete} data-testid="delete-button">
           삭제
         </button>
       )}
