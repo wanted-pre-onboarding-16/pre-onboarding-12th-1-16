@@ -92,7 +92,8 @@ const SignIn = () => {
 
   const onClickHandler = () => {
     navigate('/signup');
-      
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') handleSignIn(e);
   };
@@ -159,8 +160,6 @@ const SignIn = () => {
           >
             Sign In
           </SignInBtn>
-
-          </button>
           <button type="button" onClick={onClickHandler}>
             Sign Up
           </button>
