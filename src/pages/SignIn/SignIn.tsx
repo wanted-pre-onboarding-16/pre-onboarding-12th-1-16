@@ -18,6 +18,10 @@ const SignIn = () => {
 
   const [error, setError] = useState('');
 
+  const onClickHandler = () => {
+    navigate('/signup');
+  };
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!enableButton) return;
@@ -70,6 +74,9 @@ const SignIn = () => {
         <div>
           <button data-testid="signin-button" type="submit" disabled={enableButton ? false : true}>
             Sign In
+          </button>
+          <button type="button" onClick={onClickHandler}>
+            Sign Up
           </button>
         </div>
       </form>
