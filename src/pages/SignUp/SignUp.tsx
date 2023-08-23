@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+
 import Vaildate from '../../custom/Vaildate';
 import { SignUpHandle } from '../../util/UserUtil';
 

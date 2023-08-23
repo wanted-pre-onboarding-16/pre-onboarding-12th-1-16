@@ -90,7 +90,6 @@ const Todo = ({ data }: Prop) => {
         ref={checkRef}
         onChange={checkBoxUpdate}
       />
-
       {isModify ? (
         <input
           type="text"

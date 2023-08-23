@@ -1,20 +1,20 @@
-export interface ITodo {
+export interface Todo {
   id: number;
   todo: string;
   isCompleted: boolean;
   userId: number;
 }
 export interface State {
-  todos: ITodo[];
+  todos: Todo[];
 }
 
 export type Action =
-  | { type: 'ADD'; payload: ITodo }
-  | { type: 'GET'; payload: ITodo[] }
+  | { type: 'ADD'; payload: Todo }
+  | { type: 'GET'; payload: Todo[] }
   | { type: 'DELETE'; payload: number }
   | {
       type: 'UPDATE';
-      payload: ITodo;
+      payload: Todo;
     };
 export interface Prop {
   data: { id: number; todo: string; isCompleted: boolean; userId: number };

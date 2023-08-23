@@ -46,7 +46,7 @@ const SignIn = () => {
   return (
     <div>
       <form onSubmit={handleSignIn}>
-        <div>
+        <div className="mb-4">
           <label htmlFor="">Email</label>
           <input
             type="text"
