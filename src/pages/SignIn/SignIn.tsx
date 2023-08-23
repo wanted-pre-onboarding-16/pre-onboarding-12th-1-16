@@ -18,6 +18,9 @@ const SignIn = () => {
 
   const [error, setError] = useState('');
 
+  const onClickHandler = () => {
+    navigate('/signup');
+      
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') handleSignIn(e);
   };
@@ -78,6 +81,9 @@ const SignIn = () => {
         <div>
           <button data-testid="signin-button" type="submit" disabled={enableButton ? false : true}>
             Sign In
+          </button>
+          <button type="button" onClick={onClickHandler}>
+            Sign Up
           </button>
         </div>
       </form>
