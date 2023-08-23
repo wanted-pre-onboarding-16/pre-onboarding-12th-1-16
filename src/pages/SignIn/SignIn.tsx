@@ -1,8 +1,80 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import styled from 'styled-components';
 import Vaildate from '../../custom/Vaildate';
 import { SignInHandle } from '../../util/UserUtil';
+
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Text = styled.h1`
+  color: #ffffff;
+`;
+
+const EmailWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PasswordWrapper = styled(EmailWrapper)``;
+
+const SignInForm = styled.form`
+  width: 450px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  background: linear-gradient(to right, #ff4b2b, #ff416c);
+  border-radius: 10px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+`;
+
+const Label = styled.label`
+  font-weight: bold;
+  font-size: x-large;
+  margin-bottom: 5px;
+`;
+
+const EmailInput = styled.input`
+  width: 300px;
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin-bottom: 5px;
+`;
+
+const PasswordInput = styled(EmailInput)``;
+
+const ErrorMsg = styled.p``;
+
+const SignInBtn = styled.button`
+  border-radius: 20px;
+  border: 1px solid #ffffff;
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  margin-top: 20px;
+  cursor: pointer;
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -44,36 +116,41 @@ const SignIn = () => {
   }, [navigate]);
 
   return (
-    <div>
-      <form onSubmit={handleSignIn}>
-        <div className="mb-4">
-          <label htmlFor="">Email</label>
-          <input
+    <Container>
+      <SignInForm onSubmit={handleSignIn}>
+        <Text>Sign In</Text>
+        <EmailWrapper>
+          <Label htmlFor="">Email</Label>
+          <EmailInput
             type="text"
             data-testid="email-input"
             placeholder="example@email.com"
             onChange={e => handleEmailChange(e)}
             value={email}
           />
-        </div>
-        <div>
-          <label htmlFor="">Password</label>
-          <input
+        </EmailWrapper>
+        <PasswordWrapper>
+          <Label htmlFor="">Password</Label>
+          <PasswordInput
             type="password"
             data-testid="password-input"
             placeholder="password"
             value={password}
             onChange={e => handlePasswordChange(e)}
           />
-          {error && <p>{error}</p>}
-        </div>
+          {error && <ErrorMsg>{error}</ErrorMsg>}
+        </PasswordWrapper>
         <div>
-          <button data-testid="signin-button" type="submit" disabled={enableButton ? false : true}>
+          <SignInBtn
+            data-testid="signin-button"
+            type="submit"
+            disabled={enableButton ? false : true}
+          >
             Sign In
-          </button>
+          </SignInBtn>
         </div>
-      </form>
-    </div>
+      </SignInForm>
+    </Container>
   );
 };
 
