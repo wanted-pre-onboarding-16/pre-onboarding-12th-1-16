@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import App from './App';
 
 import { GlobalStateProvider } from './context/TodoProvider';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Todos from './pages/Todos/Todos';
+import { theme } from './util/Theme';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const router = createBrowserRouter([
@@ -77,8 +78,10 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 root.render(
-  <GlobalStateProvider>
-    <GlobalStyles />
-    <RouterProvider router={router} />
-  </GlobalStateProvider>,
+  <ThemeProvider theme={theme}>
+    <GlobalStateProvider>
+      <GlobalStyles />
+      <RouterProvider router={router} />
+    </GlobalStateProvider>
+  </ThemeProvider>,
 );

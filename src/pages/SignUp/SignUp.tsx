@@ -14,7 +14,7 @@ const Container = styled.div`
 `;
 
 const Text = styled.h1`
-  color: #ffffff;
+  color: ${props => props.theme.colors.white};
   margin-bottom: 25px;
 `;
 
@@ -32,8 +32,12 @@ const SignUpForm = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #ffffff;
-  background: linear-gradient(to right, #ff4b2b, #ff416c);
+  color: ${props => props.theme.colors.white};
+  background: linear-gradient(
+    to right,
+    ${props => props.theme.colors.red},
+    ${props => props.theme.colors.lightRed}
+  );
   border-radius: 10px;
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
@@ -48,7 +52,7 @@ const Label = styled.label`
 
 const EmailInput = styled.input`
   width: 300px;
-  background-color: #eee;
+  background-color: ${props => props.theme.colors.deepWhite};
   border: none;
   padding: 12px 15px;
   margin-bottom: 5px;
@@ -63,9 +67,9 @@ const ErrorMsg = styled.p`
 
 const SignUpBtn = styled.button`
   border-radius: 20px;
-  border: 1px solid #ffffff;
+  border: 1px solid ${props => props.theme.colors.white};
   background-color: transparent;
-  color: #ffffff;
+  color: ${props => props.theme.colors.white};
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
