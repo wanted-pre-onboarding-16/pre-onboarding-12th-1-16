@@ -18,6 +18,10 @@ const SignIn = () => {
 
   const [error, setError] = useState('');
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') handleSignIn(e);
+  };
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!enableButton) return;
@@ -64,6 +68,7 @@ const SignIn = () => {
             placeholder="password"
             value={password}
             onChange={e => handlePasswordChange(e)}
+            onKeyDown={handleKeyDown}
           />
           {error && <p>{error}</p>}
         </div>
