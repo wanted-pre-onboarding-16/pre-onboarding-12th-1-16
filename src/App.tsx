@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 function App() {
+  const navigation = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem('jwt_token')) navigation('/todo');
+  }, [navigation]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Wanted Front-end Todo List</h1>
+      <div>
+        <Link to={'/signin'}>Sign In</Link>
+        <Link to={'/signup'}>Sign Up</Link>
+      </div>
     </div>
   );
 }
