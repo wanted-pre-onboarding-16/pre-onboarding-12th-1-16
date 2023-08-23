@@ -15,6 +15,7 @@ const Container = styled.div`
 
 const Text = styled.h1`
   color: #ffffff;
+  margin-bottom: 25px;
 `;
 
 const EmailWrapper = styled.div`
@@ -55,7 +56,10 @@ const EmailInput = styled.input`
 
 const PasswordInput = styled(EmailInput)``;
 
-const ErrorMsg = styled.p``;
+const ErrorMsg = styled.p`
+  text-align: center;
+  margin-top: 20px;
+`;
 
 const SignInBtn = styled.button`
   border-radius: 20px;
@@ -69,11 +73,16 @@ const SignInBtn = styled.button`
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   margin-top: 20px;
+  margin-right: 5px;
   cursor: pointer;
 
   &:active {
     transform: scale(0.95);
   }
+`;
+
+const SignUpBtn = styled(SignInBtn)`
+  margin-left: 5px;
 `;
 
 const SignIn = () => {
@@ -160,9 +169,9 @@ const SignIn = () => {
           >
             Sign In
           </SignInBtn>
-          <button type="button" onClick={onClickHandler}>
+          <SignUpBtn type="button" onClick={onClickHandler}>
             Sign Up
-          </button>
+          </SignUpBtn>
         </div>
       </SignInForm>
     </Container>
