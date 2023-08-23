@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import Vaildate from '../../custom/Vaildate';
 import { SignUpHandle } from '../../util/UserUtil';
 
 const SignUp = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const {
     email,
     setEmail,
@@ -17,21 +17,23 @@ const SignUp = () => {
     handlePasswordChange,
   } = Vaildate();
 
+  const [error, setError] = useState('');
+
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!enableButton) return;
     try {
       await SignUpHandle(email, password).then(result => {
         if (result?.status === 201) {
-          alert('회원가입이 완료되었습니다');
-          navigation('/signin');
+          setError('');
+          navigate('/signin');
           setEmail('');
           setPassword('');
         }
       });
     } catch (err) {
       if (axios.isAxiosError(err) && err.response && err.response.status === 400) {
-        alert(err.response.data.message);
+        setError(err.response.data.message);
       } else {
         console.error(err);
       }
@@ -39,8 +41,8 @@ const SignUp = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('jwt_token')) navigation('/todo');
-  }, [navigation]);
+    if (localStorage.getItem('jwt_token')) navigate('/todo');
+  }, [navigate]);
 
   return (
     <div>
@@ -71,9 +73,9 @@ const SignUp = () => {
               placeholder="******************"
               onChange={e => handlePasswordChange(e)}
             />
+            {error && <p>{error}</p>}
           </div>
         </div>
-
         <div>
           <div>
             <button
