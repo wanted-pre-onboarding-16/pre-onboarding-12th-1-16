@@ -29,10 +29,7 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
     (e: React.FormEvent) => {
       e.preventDefault();
       if (checkRef.current && textRef.current && isModify) {
-        if (!textRef.current.value.trim()) {
-          alert('공백은 저장이 불가능합니다.');
-          return;
-        }
+        if (!textRef.current.value.trim()) return;
         const updatedTodo: ITodo = {
           ...data,
           todo: textRef.current.value,
@@ -55,11 +52,11 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
         const result = await UpdateTodo(updatedTodo);
         if (result.status === 204) {
           updateTodo(updatedTodo);
-        }
+        } else throw Error('유효하지 않은 응답');
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data) {
-        alert(err.response.data.message);
+        console.error(err.response.data.message);
       } else {
         console.error(err);
       }
@@ -83,6 +80,7 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
             defaultValue={data.todo}
             ref={textRef}
             data-testid="modify-input"
+            placeholder="1글자 이상 입력해주세요."
           ></Input>
           <UpdateBtn onClick={handelUpdate} data-testid="submit-button">
             제출
@@ -94,7 +92,6 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
       ) : (
         <TodoWrapper>
           <Text>{data.todo}</Text>
-
           <ModifyBtn onClick={toggleIsModify} data-testid="modify-button">
             수정
           </ModifyBtn>
