@@ -50,5 +50,5 @@ export const UpdateTodo = async (value: { id: number; todo: string; isCompleted:
       isCompleted: value.isCompleted,
     },
   });
-  return result.data;
+  return result;
 };
