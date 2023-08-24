@@ -28,7 +28,7 @@ export const InputWrapper = styled.div`
   align-items: center;
   border-bottom: 2px;
   border-style: solid;
-  border-color: #eee;
+  border-color: ${props => props.theme.colors.deepWhite};
 `;
 
 export const Input = styled.input`
@@ -36,7 +36,7 @@ export const Input = styled.input`
   width: 100%;
   outline: none;
   border: none;
-  color: #eee;
+  color: ${props => props.theme.colors.deepWhite};
   font-size: 20px;
   margin-right: 3px;
   padding: 1px 2px;
@@ -46,7 +46,7 @@ export const Input = styled.input`
     outline: none;
   }
   &::placeholder {
-    color: #eee;
+    color: ${props => props.theme.colors.deepWhite};
   }
 `;
 
