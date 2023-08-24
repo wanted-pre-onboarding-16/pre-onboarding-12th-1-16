@@ -26,20 +26,20 @@ const Todos = () => {
   const addTodo = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!inputRef.current) return;
-    if (!inputRef.current.value.trim()) {
-      alert('옳바르지 않은 값을 입력하셨습니다.');
-      return;
-    }
+    if (!inputRef.current.value.trim()) return;
+
     try {
       await PostTodo(inputRef.current.value).then(result => {
-        setTodoList(prevList => [...prevList, result]);
-        if (inputRef.current) {
-          inputRef.current.value = '';
-        }
+        if (result) {
+          setTodoList(prevList => [...prevList, result]);
+          if (inputRef.current) {
+            inputRef.current.value = '';
+          }
+        } else throw Error('유효하지 않은 응답입니다.');
       });
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data) {
-        alert(err.response?.data.message);
+        console.error(err.response?.data.message);
       } else {
         console.error(err);
       }
@@ -47,12 +47,20 @@ const Todos = () => {
   }, []);
 
   const deleteTodo = useCallback(async (postId: number) => {
-    const result = await DeleteTodo(postId);
-    if (result.status === 204) {
-      setTodoList(prevList => {
-        const newList = [...prevList].filter(el => el.id !== postId);
-        return newList;
-      });
+    try {
+      const result = await DeleteTodo(postId);
+      if (result.status === 204) {
+        setTodoList(prevList => {
+          const newList = [...prevList].filter(el => el.id !== postId);
+          return newList;
+        });
+      } else throw Error('유효하지 않은 응답');
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.data) {
+        console.error(err.response.data.message);
+      } else {
+        console.error(err);
+      }
     }
   }, []);
 
@@ -68,10 +76,10 @@ const Todos = () => {
           }
           return updatedList;
         });
-      }
+      } else throw Error('유효하지 않은 응답');
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data) {
-        alert(err.response.data.message);
+        console.error(err.response.data.message);
       } else {
         console.error(err);
       }
@@ -80,7 +88,6 @@ const Todos = () => {
 
   useEffect(() => {
     if (!localStorage.getItem('jwt_token')) {
-      alert('로그인을 하지않았습니다.');
       navigation('/signin');
       return;
     }
@@ -90,7 +97,7 @@ const Todos = () => {
         setTodoList(result);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response?.data) {
-          alert(err.response.data.message);
+          console.error(err.response.data.message);
         } else {
           console.error(err);
         }
@@ -103,7 +110,12 @@ const Todos = () => {
     <Container>
       <SignOutBtn onClick={signOut}>Sign Out</SignOutBtn>
       <InputWrapper>
-        <Input type="text" placeholder="example" data-testid="new-todo-input" ref={inputRef} />
+        <Input
+          type="text"
+          placeholder="1글자 이상 입력하세요."
+          data-testid="new-todo-input"
+          ref={inputRef}
+        />
         <AddBtn type="button" data-testid="new-todo-add-button" onClick={addTodo}>
           ADD
         </AddBtn>
