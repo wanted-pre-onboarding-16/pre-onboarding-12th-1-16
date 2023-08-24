@@ -5,6 +5,7 @@ import { ITodo } from '../../..';
 import Todo from '../../components/Todo/Todo';
 
 import { DeleteTodo, GetTodo, PostTodo } from '../../util/TodoUtil';
+import { AddBtn, Container, Input, InputWrapper, SignOutBtn } from './Todos.styled';
 
 const Todos = () => {
   const navigation = useNavigate();
@@ -70,16 +71,16 @@ const Todos = () => {
   }, [navigation]);
 
   return (
-    <div>
-      <button onClick={signOut}>Sign Out</button>
-      <div className="my-10 flex items-center border-b border-teal-500 py-2">
-        <input type="text" placeholder="example" data-testid="new-todo-input" ref={inputRef} />
-        <button type="button" data-testid="new-todo-add-button" onClick={addTodo}>
+    <Container>
+      <SignOutBtn onClick={signOut}>Sign Out</SignOutBtn>
+      <InputWrapper className="my-10 flex items-center border-b border-teal-500 py-2">
+        <Input type="text" placeholder="example" data-testid="new-todo-input" ref={inputRef} />
+        <AddBtn type="button" data-testid="new-todo-add-button" onClick={addTodo}>
           ADD
-        </button>
-      </div>
+        </AddBtn>
+      </InputWrapper>
       <ul>{todoList?.map(todo => <Todo key={todo.id} data={todo} deleteTodo={deleteTodo} />)}</ul>
-    </div>
+    </Container>
   );
 };
 
