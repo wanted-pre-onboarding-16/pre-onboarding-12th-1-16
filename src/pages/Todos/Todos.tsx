@@ -5,6 +5,7 @@ import { ITodo } from '../../..';
 import Todo from '../../components/Todo/Todo';
 
 import { DeleteTodo, GetTodo, PostTodo, UpdateTodo } from '../../util/TodoUtil';
+import { AddBtn, Container, Input, InputWrapper, SignOutBtn } from './Todos.styled';
 
 const Todos = () => {
   const navigation = useNavigate();
@@ -58,7 +59,6 @@ const Todos = () => {
   const updateTodo = useCallback(async (updatedTodo: ITodo) => {
     try {
       const result = await UpdateTodo(updatedTodo);
-      console.info(result);
       if (result.status === 200) {
         setTodoList(prevList => {
           const updatedList = [...prevList];
@@ -66,11 +66,9 @@ const Todos = () => {
           if (todoIndex !== -1) {
             updatedList[todoIndex] = updatedTodo;
           }
-          console.info(updatedList);
           return updatedList;
         });
       }
-      console.info(result.status);
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data) {
         alert(err.response.data.message);
@@ -102,14 +100,14 @@ const Todos = () => {
   }, [navigation]);
 
   return (
-    <div>
-      <button onClick={signOut}>Sign Out</button>
-      <div className="my-10 flex items-center border-b border-teal-500 py-2">
-        <input type="text" placeholder="example" data-testid="new-todo-input" ref={inputRef} />
-        <button type="button" data-testid="new-todo-add-button" onClick={addTodo}>
+    <Container>
+      <SignOutBtn onClick={signOut}>Sign Out</SignOutBtn>
+      <InputWrapper>
+        <Input type="text" placeholder="example" data-testid="new-todo-input" ref={inputRef} />
+        <AddBtn type="button" data-testid="new-todo-add-button" onClick={addTodo}>
           ADD
-        </button>
-      </div>
+        </AddBtn>
+      </InputWrapper>
       <ul>
         {todoList?.map(todo => (
           <Todo
@@ -122,7 +120,7 @@ const Todos = () => {
           />
         ))}
       </ul>
-    </div>
+    </Container>
   );
 };
 

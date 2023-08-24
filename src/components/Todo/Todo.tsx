@@ -2,6 +2,17 @@ import axios from 'axios';
 import React, { useCallback, useRef } from 'react';
 import { ITodo, Prop } from '../../..';
 import { UpdateTodo } from '../../util/TodoUtil';
+import {
+  CancelBtn,
+  CheckBoxInput,
+  DeleteBtn,
+  Input,
+  List,
+  ModifyBtn,
+  Text,
+  TodoWrapper,
+  UpdateBtn,
+} from './Todo.styled';
 
 const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) => {
   const textRef = useRef<HTMLInputElement>(null);
@@ -15,7 +26,7 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
     [data.id, deleteTodo],
   );
   const handelUpdate = useCallback(
-    async (e: React.FormEvent) => {
+    (e: React.FormEvent) => {
       e.preventDefault();
       if (checkRef.current && textRef.current && isModify) {
         if (!textRef.current.value.trim()) {
@@ -27,7 +38,7 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
           todo: textRef.current.value,
           isCompleted: checkRef.current.checked,
         };
-        await updateTodo(updatedTodo);
+        updateTodo(updatedTodo);
         toggleIsModify();
       }
     },
@@ -55,44 +66,41 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
     }
   }, [data, isModify, updateTodo]);
   return (
-    <li>
-      <input
+    <List>
+      <CheckBoxInput
         type="checkbox"
         defaultChecked={data.isCompleted}
         ref={checkRef}
         onChange={checkBoxUpdate}
       />
       {isModify ? (
-        <input
-          type="text"
-          defaultValue={data.todo}
-          ref={textRef}
-          data-testid="modify-input"
-        ></input>
+        <TodoWrapper>
+          <Input
+            type="text"
+            defaultValue={data.todo}
+            ref={textRef}
+            data-testid="modify-input"
+          ></Input>
+          <UpdateBtn onClick={handelUpdate} data-testid="submit-button">
+            제출
+          </UpdateBtn>
+          <CancelBtn onClick={() => toggleIsModify()} data-testid="cancel-button">
+            취소
+          </CancelBtn>
+        </TodoWrapper>
       ) : (
-        <p>{data.todo}</p>
-      )}
+        <TodoWrapper>
+          <Text>{data.todo}</Text>
 
-      {isModify ? (
-        <button onClick={handelUpdate} data-testid="submit-button">
-          제출
-        </button>
-      ) : (
-        <button onClick={toggleIsModify} data-testid="modify-button">
-          수정
-        </button>
+          <ModifyBtn onClick={toggleIsModify} data-testid="modify-button">
+            수정
+          </ModifyBtn>
+          <DeleteBtn onClick={handleDelete} data-testid="delete-button">
+            삭제
+          </DeleteBtn>
+        </TodoWrapper>
       )}
-
-      {isModify ? (
-        <button onClick={() => toggleIsModify()} data-testid="cancel-button">
-          취소
-        </button>
-      ) : (
-        <button onClick={handleDelete} data-testid="delete-button">
-          삭제
-        </button>
-      )}
-    </li>
+    </List>
   );
 };
 
