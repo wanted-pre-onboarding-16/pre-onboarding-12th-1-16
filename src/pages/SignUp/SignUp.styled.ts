@@ -30,10 +30,15 @@ export const SignUpBtn = styled.button`
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+  margin-left: 5px;
+  margin-right: 0;
   margin-top: 20px;
   cursor: pointer;
-
   &:active {
     transform: scale(0.95);
   }
+`;
+export const SignInBtn = styled(SignUpBtn)`
+  margin-left: 0;
+  margin-right: 5px;
 `;
