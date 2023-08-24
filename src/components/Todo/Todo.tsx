@@ -68,11 +68,14 @@ const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) 
   return (
     <List>
       <CheckBoxInput
+        name="checkbox-input"
         type="checkbox"
         defaultChecked={data.isCompleted}
         ref={checkRef}
         onChange={checkBoxUpdate}
+        aria-label="checkbox"
       />
+
       {isModify ? (
         <TodoWrapper>
           <Input
