@@ -77,34 +77,30 @@ const Todo = ({ data, deleteTodo }: Prop) => {
         onChange={checkBoxUpdate}
       />
       {isModify ? (
-        <input
-          type="text"
-          defaultValue={data.todo}
-          ref={textRef}
-          data-testid="modify-input"
-        ></input>
+        <>
+          <input
+            type="text"
+            defaultValue={data.todo}
+            ref={textRef}
+            data-testid="modify-input"
+          ></input>
+          <button onClick={updateTodo} data-testid="submit-button">
+            제출
+          </button>
+          <button onClick={() => setIsModify(false)} data-testid="cancel-button">
+            취소
+          </button>
+        </>
       ) : (
-        <p>{data.todo}</p>
-      )}
-
-      {isModify ? (
-        <button onClick={updateTodo} data-testid="submit-button">
-          제출
-        </button>
-      ) : (
-        <button onClick={() => setIsModify(!isModify)} data-testid="modify-button">
-          수정
-        </button>
-      )}
-
-      {isModify ? (
-        <button onClick={() => setIsModify(false)} data-testid="cancel-button">
-          취소
-        </button>
-      ) : (
-        <button onClick={handleDelete} data-testid="delete-button">
-          삭제
-        </button>
+        <>
+          <p>{data.todo}</p>
+          <button onClick={() => setIsModify(!isModify)} data-testid="modify-button">
+            수정
+          </button>
+          <button onClick={handleDelete} data-testid="delete-button">
+            삭제
+          </button>
+        </>
       )}
     </li>
   );
