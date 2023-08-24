@@ -4,18 +4,23 @@ import { useNavigate } from 'react-router';
 import { ITodo } from '../../..';
 import Todo from '../../components/Todo/Todo';
 
-import { DeleteTodo, GetTodo, PostTodo } from '../../util/TodoUtil';
+import { DeleteTodo, GetTodo, PostTodo, UpdateTodo } from '../../util/TodoUtil';
 
 const Todos = () => {
   const navigation = useNavigate();
   const [todoList, setTodoList] = useState<ITodo[]>([]);
-
+  const [editingTodoId, setEditingTodoId] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('jwt_token');
     navigation('/');
   }, [navigation]);
+
+  const toggleIsModify = (id?: number) => {
+    if (id === undefined) return;
+    setEditingTodoId(prevId => (prevId === id ? null : id));
+  };
 
   const addTodo = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -39,6 +44,7 @@ const Todos = () => {
       }
     }
   }, []);
+
   const deleteTodo = useCallback(async (postId: number) => {
     const result = await DeleteTodo(postId);
     if (result.status === 204) {
@@ -48,6 +54,32 @@ const Todos = () => {
       });
     }
   }, []);
+
+  const updateTodo = useCallback(async (updatedTodo: ITodo) => {
+    try {
+      const result = await UpdateTodo(updatedTodo);
+      console.info(result);
+      if (result.status === 200) {
+        setTodoList(prevList => {
+          const updatedList = [...prevList];
+          const todoIndex = updatedList.findIndex(el => el.id === updatedTodo.id);
+          if (todoIndex !== -1) {
+            updatedList[todoIndex] = updatedTodo;
+          }
+          console.info(updatedList);
+          return updatedList;
+        });
+      }
+      console.info(result.status);
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.data) {
+        alert(err.response.data.message);
+      } else {
+        console.error(err);
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (!localStorage.getItem('jwt_token')) {
       alert('로그인을 하지않았습니다.');
@@ -78,7 +110,18 @@ const Todos = () => {
           ADD
         </button>
       </div>
-      <ul>{todoList?.map(todo => <Todo key={todo.id} data={todo} deleteTodo={deleteTodo} />)}</ul>
+      <ul>
+        {todoList?.map(todo => (
+          <Todo
+            key={todo.id}
+            data={todo}
+            deleteTodo={deleteTodo}
+            updateTodo={updateTodo}
+            isModify={todo.id === editingTodoId}
+            toggleIsModify={() => toggleIsModify(todo.id)}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

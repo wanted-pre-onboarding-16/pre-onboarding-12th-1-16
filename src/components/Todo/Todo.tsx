@@ -1,14 +1,11 @@
 import axios from 'axios';
-import React, { useCallback, useRef, useState } from 'react';
-import type { Prop } from '../../..';
-import { GlobalState } from '../../context/TodoProvider';
+import React, { useCallback, useRef } from 'react';
+import { ITodo, Prop } from '../../..';
 import { UpdateTodo } from '../../util/TodoUtil';
 
-const Todo = ({ data, deleteTodo }: Prop) => {
-  const context = GlobalState();
+const Todo = ({ data, deleteTodo, updateTodo, isModify, toggleIsModify }: Prop) => {
   const textRef = useRef<HTMLInputElement>(null);
   const checkRef = useRef<HTMLInputElement>(null);
-  const [isModify, setIsModify] = useState(false);
 
   const handleDelete = useCallback(
     (e: React.FormEvent) => {
@@ -17,7 +14,7 @@ const Todo = ({ data, deleteTodo }: Prop) => {
     },
     [data.id, deleteTodo],
   );
-  const updateTodo = useCallback(
+  const handelUpdate = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
       if (checkRef.current && textRef.current && isModify) {
@@ -25,40 +22,29 @@ const Todo = ({ data, deleteTodo }: Prop) => {
           alert('공백은 저장이 불가능합니다.');
           return;
         }
-      }
-      try {
-        const result = await UpdateTodo({
-          id: data.id,
-          todo: textRef.current?.value as string,
-          isCompleted: checkRef.current?.checked as boolean,
-        });
-        context?.dispatch({
-          type: 'UPDATE',
-          payload: result,
-        });
-        setIsModify(false);
-      } catch (err) {
-        if (axios.isAxiosError(err) && err.response?.data) {
-          alert(err.response.data.message);
-        } else {
-          console.error(err);
-        }
+        const updatedTodo: ITodo = {
+          ...data,
+          todo: textRef.current.value,
+          isCompleted: checkRef.current.checked,
+        };
+        await updateTodo(updatedTodo);
+        toggleIsModify();
       }
     },
-    [context, data.id, isModify],
+    [data, isModify, updateTodo, toggleIsModify],
   );
 
   const checkBoxUpdate = useCallback(async () => {
     try {
       if (checkRef.current && !isModify) {
-        const result = await UpdateTodo({
+        const updatedTodo: ITodo = {
           ...data,
           isCompleted: checkRef.current?.checked,
-        });
-        context?.dispatch({
-          type: 'UPDATE',
-          payload: result,
-        });
+        };
+        const result = await UpdateTodo(updatedTodo);
+        if (result.status === 204) {
+          updateTodo(updatedTodo);
+        }
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response?.data) {
@@ -67,7 +53,7 @@ const Todo = ({ data, deleteTodo }: Prop) => {
         console.error(err);
       }
     }
-  }, [context, data, isModify]);
+  }, [data, isModify, updateTodo]);
   return (
     <li>
       <input
@@ -88,17 +74,17 @@ const Todo = ({ data, deleteTodo }: Prop) => {
       )}
 
       {isModify ? (
-        <button onClick={updateTodo} data-testid="submit-button">
+        <button onClick={handelUpdate} data-testid="submit-button">
           제출
         </button>
       ) : (
-        <button onClick={() => setIsModify(!isModify)} data-testid="modify-button">
+        <button onClick={toggleIsModify} data-testid="modify-button">
           수정
         </button>
       )}
 
       {isModify ? (
-        <button onClick={() => setIsModify(false)} data-testid="cancel-button">
+        <button onClick={() => toggleIsModify()} data-testid="cancel-button">
           취소
         </button>
       ) : (
@@ -110,4 +96,4 @@ const Todo = ({ data, deleteTodo }: Prop) => {
   );
 };
 
-export default React.memo(Todo);
+export default Todo;

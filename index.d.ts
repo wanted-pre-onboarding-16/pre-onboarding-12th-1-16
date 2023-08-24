@@ -19,5 +19,7 @@ export type Action =
 export interface Prop {
   data: ITodo;
   deleteTodo: (postId: number) => void;
-  updateTodo: (id: number, todo: string, isCompleted: boolean) => void;
+  updateTodo: (data: ITodo) => void;
+  toggleIsModify: () => void;
+  isModify: boolean;
 }
