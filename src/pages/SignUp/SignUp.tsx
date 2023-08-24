@@ -5,15 +5,15 @@ import Vaildate from '../../custom/Vaildate';
 import { SignUpHandle } from '../../util/UserUtil';
 import {
   Container,
-  Text,
-  EmailWrapper,
-  PasswordWrapper,
-  Label,
   EmailInput,
-  PasswordInput,
+  EmailWrapper,
   ErrorMsg,
+  Label,
+  PasswordInput,
+  PasswordWrapper,
+  Text,
 } from '../SignIn/SignIn.styled';
-import { SignUpForm, SignUpBtn } from './SignUp.styled';
+import { SignInBtn, SignUpBtn, SignUpForm } from './SignUp.styled';
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -85,6 +85,7 @@ const SignUp = () => {
           {error && <ErrorMsg>{error}</ErrorMsg>}
         </PasswordWrapper>
         <div>
+          <SignInBtn onClick={() => navigate('/signin')}>Sign In</SignInBtn>
           <SignUpBtn
             type="submit"
             data-testid="signup-button"
