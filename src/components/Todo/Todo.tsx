@@ -3,6 +3,17 @@ import React, { useCallback, useRef, useState } from 'react';
 import type { Prop } from '../../..';
 import { GlobalState } from '../../context/TodoProvider';
 import { UpdateTodo } from '../../util/TodoUtil';
+import {
+  CancelBtn,
+  CheckBoxInput,
+  DeleteBtn,
+  Input,
+  List,
+  ModifyBtn,
+  Text,
+  TodoWrapper,
+  UpdateBtn,
+} from './Todo.styled';
 
 const Todo = ({ data, deleteTodo }: Prop) => {
   const context = GlobalState();
@@ -69,40 +80,41 @@ const Todo = ({ data, deleteTodo }: Prop) => {
     }
   }, [context, data, isModify]);
   return (
-    <li>
-      <input
+    <List>
+      <CheckBoxInput
         type="checkbox"
         defaultChecked={data.isCompleted}
         ref={checkRef}
         onChange={checkBoxUpdate}
       />
       {isModify ? (
-        <>
-          <input
+        <TodoWrapper>
+          <Input
             type="text"
             defaultValue={data.todo}
             ref={textRef}
             data-testid="modify-input"
-          ></input>
-          <button onClick={updateTodo} data-testid="submit-button">
+          ></Input>
+          <UpdateBtn onClick={updateTodo} data-testid="submit-button">
             제출
-          </button>
-          <button onClick={() => setIsModify(false)} data-testid="cancel-button">
+          </UpdateBtn>
+          <CancelBtn onClick={() => setIsModify(false)} data-testid="cancel-button">
             취소
-          </button>
-        </>
+          </CancelBtn>
+        </TodoWrapper>
       ) : (
-        <>
-          <p>{data.todo}</p>
-          <button onClick={() => setIsModify(!isModify)} data-testid="modify-button">
+        <TodoWrapper>
+          <Text>{data.todo}</Text>
+
+          <ModifyBtn onClick={() => setIsModify(!isModify)} data-testid="modify-button">
             수정
-          </button>
-          <button onClick={handleDelete} data-testid="delete-button">
+          </ModifyBtn>
+          <DeleteBtn onClick={handleDelete} data-testid="delete-button">
             삭제
-          </button>
-        </>
+          </DeleteBtn>
+        </TodoWrapper>
       )}
-    </li>
+    </List>
   );
 };
 
