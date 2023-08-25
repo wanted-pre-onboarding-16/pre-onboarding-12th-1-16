@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import App from './App';
-
-import { GlobalStateProvider } from './context/TodoProvider';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Todos from './pages/Todos/Todos';
@@ -79,9 +77,7 @@ const GlobalStyles = createGlobalStyle`
 
 root.render(
   <ThemeProvider theme={theme}>
-    <GlobalStateProvider>
-      <GlobalStyles />
-      <RouterProvider router={router} />
-    </GlobalStateProvider>
+    <GlobalStyles />
+    <RouterProvider router={router} />
   </ThemeProvider>,
 );
