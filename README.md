@@ -18,7 +18,7 @@
 
 ## 2. 개발 환경 및 배포 URL
 
-[🔗 배포링크](https://pre-onboarding-12th-1-16-2vt6ydlc6-pre-onboarding-12th-1-16.vercel.app/signin)
+[🔗 배포링크](https://pre-onboarding-12th-1-16.vercel.app/signin)
 
 ## 3. 프로젝트 구조
 
