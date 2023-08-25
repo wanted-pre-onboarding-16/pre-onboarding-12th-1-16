@@ -14,17 +14,20 @@
 ### 🎇동료학습을 통하여 기업 취업을 위한 온보딩으로 개개인 및 팀의 성장 도모🎇
 
 ## 2. 개발 환경 및 배포 URL
-[배포링크🔗](https://pre-onboarding-12th-1-16-2vt6ydlc6-pre-onboarding-12th-1-16.vercel.app/signin)
+[🔗 배포링크](https://pre-onboarding-12th-1-16-2vt6ydlc6-pre-onboarding-12th-1-16.vercel.app/signin)
 
 ## 3. 프로젝트 구조
-```
+![image](https://github.com/wanted-pre-onboarding-16/pre-onboarding-12th-1-16/assets/104200167/666bb536-bce6-44e9-b071-cbc4bc108453)
 
-```
 
 ## 4. 기술 스택
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/><img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/><img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/><img src="https://img.shields.io/badge/Tailwind CSS-06B6D4?style=flat-square&logo=Tailwind CSS&logoColor=white"/><img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=white"/> 
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black"/> <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/> <img height=20 src="https://img.shields.io/badge/styled-components-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"> <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=Vercel&logoColor=white"/> 
 ## 5. UI
+![image](https://github.com/wanted-pre-onboarding-16/pre-onboarding-12th-1-16/assets/104200167/a1b73f24-54ef-4116-a547-aee627feeeb8)
 
+![image](https://github.com/wanted-pre-onboarding-16/pre-onboarding-12th-1-16/assets/104200167/0ecc7603-7fcb-4504-b3a8-75fd84175620)
+
+![image](https://github.com/wanted-pre-onboarding-16/pre-onboarding-12th-1-16/assets/104200167/0a2c7b29-5d22-4b1c-8f8d-eedff39e7ff9)
 
 ## 6. 페이지 기능
 
