@@ -36,12 +36,3 @@
 
 ![image](https://github.com/wanted-pre-onboarding-16/pre-onboarding-12th-1-16/assets/104200167/0a2c7b29-5d22-4b1c-8f8d-eedff39e7ff9)
 
-## 6. 페이지 기능
-
-### 회원가입 페이지
-
-### 로그인 페이지
-
-### 투두리스트 페이지
-
-## 7. 시행착오
